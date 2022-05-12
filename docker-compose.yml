@@ -1,0 +1,27 @@
+version: '2'
+services:
+  db:
+    build:
+      context: /home/analista/Docker-GnuHealth
+      dockerfile: postgres/Dockerfile
+    #build: postgres
+    #image: mbsolutions/postgres-gnuhealth:3.0
+    #volumes:
+    #  - ./postgresql-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=12345678
+
+  tryton:
+    build:
+      context: /home/analista/Docker-GnuHealth
+      dockerfile: gnu-server/Dockerfile
+    #build: gnu-server
+    #image: mbsolutions/tryton-server-gnuhealth:3.8
+    #volumes:
+    #  - ./tryton-data:/var/lib/tryton
+    environment:
+      - TRYTOND_PASSWORD=admin
+    ports:
+      - "8000:8000"
+    links:
+      - db
